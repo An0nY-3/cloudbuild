@@ -20,6 +20,18 @@ steps:
       - '--allow-unauthenticated'
       - '--port=8080'
 
+  # Step 4: Ensure IAM policy is set correctly
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      - 'run'
+      - 'services'
+      - 'add-iam-policy-binding'
+      - 'my-app'
+      - '--region=us-central1'
+      - '--member=allUsers'
+      - '--role=roles/run.invoker'
+
 # Store the built image in GCR
 images:
   - 'gcr.io/abstract-gizmo-451406-b5/my-app:$COMMIT_SHA'
