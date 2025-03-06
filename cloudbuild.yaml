@@ -1,13 +1,13 @@
 steps:
-  # Step 1: Build the Docker image is
+  # Step 1: Build the Docker image
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 'gcr.io/abstract-gizmo-451406-b5/my-app:$COMMIT_SHA', '.']
 
-  # Step 2: Push the image to Google Container Registry (GCR)
+  # Step 2: Push the image to Google Container Registry
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/abstract-gizmo-451406-b5/my-app:$COMMIT_SHA']
 
-  # Step 3: Deploy to Cloud Run
+  # Step 3: Deploy the container to Cloud Run
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: gcloud
     args:
@@ -20,9 +20,10 @@ steps:
       - '--allow-unauthenticated'
       - '--port=8080'
 
+# Store the built image in GCR
 images:
   - 'gcr.io/abstract-gizmo-451406-b5/my-app:$COMMIT_SHA'
 
-# Fix for the logging error
+# Use Google Cloud Logging
 options:
   logging: CLOUD_LOGGING_ONLY
