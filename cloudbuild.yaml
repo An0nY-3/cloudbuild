@@ -22,3 +22,7 @@ steps:
 
 images:
   - 'gcr.io/abstract-gizmo-451406-b5/my-app:$COMMIT_SHA'
+
+# Fix for the logging error
+options:
+  logging: CLOUD_LOGGING_ONLY
