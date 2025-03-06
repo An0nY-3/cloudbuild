@@ -1,20 +1,18 @@
-# Use an official lightweight Python image as a base
+# Use a lightweight Python image
 FROM python:3.11-slim
 
-# Set the working directory
+# Set the working directory inside the container
 WORKDIR /app
 
-# Copy only requirements first (for better caching)
+# Copy the requirements file and install dependencies
 COPY requirements.txt .
-
-# Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the rest of the application
+# Copy the application code
 COPY . .
 
-# Expose the application port
+# Expose port 8080 for Cloud Run
 EXPOSE 8080
 
-# Command to run the application
+# Run the application
 CMD ["python", "app.py"]
