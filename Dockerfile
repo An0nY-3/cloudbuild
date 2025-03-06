@@ -1,7 +1,7 @@
 # Use a lightweight Python image
 FROM python:3.11-slim
 
-# Set the working directory inside the container
+# Set the working directory
 WORKDIR /app
 
 # Copy the requirements file and install dependencies
@@ -11,7 +11,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the application code
 COPY . .
 
-# Expose port 8080 for Cloud Run
+# Set environment variable for Cloud Run
+ENV PORT=8080
+
+# Expose port 8080 (Cloud Run requires this)
 EXPOSE 8080
 
 # Run the application
